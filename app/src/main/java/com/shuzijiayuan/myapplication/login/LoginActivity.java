@@ -1,5 +1,6 @@
-package com.shuzijiayuan.myapplication.login.view;
+package com.shuzijiayuan.myapplication.login;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -13,8 +14,7 @@ import android.widget.Toast;
 
 import com.shuzijiayuan.myapplication.R;
 import com.shuzijiayuan.myapplication.data.Injection;
-import com.shuzijiayuan.myapplication.login.contract.LoginContract;
-import com.shuzijiayuan.myapplication.login.presenter.LoginPresenterImpl;
+import com.shuzijiayuan.myapplication.profile.ProfileListActivity;
 
 /**
  * A login screen that offers login via email/password.
@@ -51,6 +51,8 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     public void loginSuccess() {
         //登录成功
         Toast.makeText(this, R.string.result_login_success, Toast.LENGTH_LONG).show();
+        startActivity(new Intent(this, ProfileListActivity.class));
+        this.finish();
     }
 
     @Override

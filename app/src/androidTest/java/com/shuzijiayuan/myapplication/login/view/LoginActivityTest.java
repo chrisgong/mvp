@@ -1,14 +1,15 @@
 package com.shuzijiayuan.myapplication.login.view;
 
-import android.os.SystemClock;
 import android.support.test.rule.ActivityTestRule;
 
 import com.shuzijiayuan.myapplication.R;
+import com.shuzijiayuan.myapplication.login.LoginActivity;
 
 import org.junit.Rule;
 import org.junit.Test;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
@@ -29,6 +30,8 @@ public class LoginActivityTest {
 
     @Test
     public void testLogin(){
+        onView(withId(R.id.phone)).perform(clearText());
+        onView(withId(R.id.password)).perform(clearText());
         onView(withId(R.id.phone)).perform(typeText("18618416321"), closeSoftKeyboard());
         onView(withId(R.id.password)).perform(typeText("880316"), closeSoftKeyboard());
         onView(withId(R.id.phone_sign_in_button)).perform(click());

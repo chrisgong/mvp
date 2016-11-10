@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.shuzijiayuan.myapplication.BuildConfig;
 import com.shuzijiayuan.myapplication.R;
-import com.shuzijiayuan.myapplication.login.view.LoginActivity;
+import com.shuzijiayuan.myapplication.login.LoginActivity;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

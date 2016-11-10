@@ -3,9 +3,12 @@ package com.shuzijiayuan.myapplication.data.remote;
 
 import com.shuzijiayuan.myapplication.data.bean.login.LoginRequest;
 import com.shuzijiayuan.myapplication.data.bean.login.LoginResult;
+import com.shuzijiayuan.myapplication.data.bean.profile.ProfileListResult;
 
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import rx.Observable;
 
 /**
@@ -47,4 +50,11 @@ public interface ApiSet {
     @POST("/user/login")
     Observable<LoginResult> login(@Body LoginRequest body);
 
+    /**
+     * profile列表
+     *
+     * @return
+     */
+    @GET("/profile/list/{token}")
+    Observable<ProfileListResult> profileList(@Path("token") String token);
 }

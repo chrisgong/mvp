@@ -1,4 +1,4 @@
-package com.shuzijiayuan.myapplication.data.repository;
+package com.shuzijiayuan.myapplication.data.repository.login;
 
 import android.support.annotation.NonNull;
 
@@ -24,7 +24,7 @@ public class LoginRepository implements LoginDataSource {
 
     boolean mCacheIsDirty = false;
 
-    Map<String, UserInfo> mCacheds;
+    Map<String, UserInfo> mCaches;
 
     // Prevent direct instantiation.
     private LoginRepository(@NonNull LoginDataSource loginRemoteDataSource, @NonNull LoginDataSource loginLocalDataSource) {
@@ -45,7 +45,7 @@ public class LoginRepository implements LoginDataSource {
             public void onGetUserInfo(UserInfo info) {
                 refreshCache(info);
                 refreshLocalDataSource(info);
-                callback.onGetUserInfo(new ArrayList<>(mCacheds.values()).get(0));
+                callback.onGetUserInfo(new ArrayList<>(mCaches.values()).get(0));
             }
 
             @Override
@@ -56,11 +56,11 @@ public class LoginRepository implements LoginDataSource {
     }
 
     private void refreshCache(UserInfo info) {
-        if (mCacheds == null) {
-            mCacheds = new LinkedHashMap<>();
+        if (mCaches == null) {
+            mCaches = new LinkedHashMap<>();
         }
-        mCacheds.clear();
-        mCacheds.put(info.token, info);
+        mCaches.clear();
+        mCaches.put(info.token, info);
         mCacheIsDirty = false;
     }
 
@@ -74,8 +74,8 @@ public class LoginRepository implements LoginDataSource {
         checkNotNull(callback);
 
         // Respond immediately with cache if available and not dirty
-        if (mCacheds != null && !mCacheIsDirty) {
-            callback.onGetUserInfo(new ArrayList<>(mCacheds.values()).get(0));
+        if (mCaches != null && !mCacheIsDirty) {
+            callback.onGetUserInfo(new ArrayList<>(mCaches.values()).get(0));
             return;
         }
 
@@ -88,7 +88,7 @@ public class LoginRepository implements LoginDataSource {
                 @Override
                 public void onGetUserInfo(UserInfo info) {
                     refreshCache(info);
-                    callback.onGetUserInfo(new UserInfo("token2"));
+                    callback.onGetUserInfo(info);
                 }
 
                 @Override
@@ -104,14 +104,19 @@ public class LoginRepository implements LoginDataSource {
         mLoginRemoteDataSource.deleteAllUserInfo();
         mLoginLocalDataSource.deleteAllUserInfo();
 
-        if (mCacheds == null) {
-            mCacheds = new LinkedHashMap<>();
+        if (mCaches == null) {
+            mCaches = new LinkedHashMap<>();
         }
-        mCacheds.clear();
+        mCaches.clear();
     }
 
     @Override
     public void saveUserInfo(@NonNull UserInfo task) {
 
+    }
+
+    @Override
+    public String getToken() {
+        return mLoginLocalDataSource.getToken();
     }
 }

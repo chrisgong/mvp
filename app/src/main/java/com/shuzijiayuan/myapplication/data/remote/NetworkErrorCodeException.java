@@ -1,4 +1,4 @@
-package com.shuzijiayuan.myapplication.data.repository;
+package com.shuzijiayuan.myapplication.data.remote;
 
 /**
  * Created by gc on 2016/11/8.

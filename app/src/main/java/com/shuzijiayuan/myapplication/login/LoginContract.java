@@ -1,4 +1,4 @@
-package com.shuzijiayuan.myapplication.login.contract;
+package com.shuzijiayuan.myapplication.login;
 
 import com.shuzijiayuan.myapplication.data.bean.login.UserInfo;
 
@@ -21,20 +21,7 @@ public interface LoginContract {
     public interface Presenter {
 
         void login(String phone, String password);
-    }
 
-    public interface Model {
-
-        void login(long phone, String password, ILoginCallback callback);
-
-        void saveUserInfo(UserInfo info);
-
-        UserInfo getUserInfo();
-    }
-
-    public interface ILoginCallback {
-        void success(UserInfo info);
-
-        void failure(String message);
+        String getToken();
     }
 }

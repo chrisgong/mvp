@@ -18,7 +18,7 @@
         android:name=".AppContext"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.shuzijiayuan.myapplication.login.view.LoginActivity"
+            android:name="com.shuzijiayuan.myapplication.login.LoginActivity"
             android:label="@string/title_activity_login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -26,6 +26,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity android:name=".profile.ProfileListActivity" />
     </application>
 
 </manifest>

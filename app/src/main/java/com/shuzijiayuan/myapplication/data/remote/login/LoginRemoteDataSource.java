@@ -1,14 +1,13 @@
 package com.shuzijiayuan.myapplication.data.remote.login;
 
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
 import com.shuzijiayuan.myapplication.AppContext;
-import com.shuzijiayuan.myapplication.data.repository.LoginDataSource;
 import com.shuzijiayuan.myapplication.data.bean.login.LoginRequest;
 import com.shuzijiayuan.myapplication.data.bean.login.LoginResult;
 import com.shuzijiayuan.myapplication.data.bean.login.UserInfo;
 import com.shuzijiayuan.myapplication.data.remote.ApiUtils;
+import com.shuzijiayuan.myapplication.data.repository.login.LoginDataSource;
 import com.shuzijiayuan.myapplication.utils.TextUtils;
 
 import rx.android.schedulers.AndroidSchedulers;
@@ -45,7 +44,7 @@ public class LoginRemoteDataSource implements LoginDataSource {
                     @Override
                     public void call(LoginResult loginResult) {
                         if (loginResult != null) {
-                            String token = loginResult.getData().getToken();
+                            String token = loginResult.getData().token;
                             if (!TextUtils.isEmpty(token)) {
                                 callback.onGetUserInfo(new UserInfo(token));
                             } else {
@@ -63,7 +62,11 @@ public class LoginRemoteDataSource implements LoginDataSource {
 
     @Override
     public void saveUserInfo(@NonNull UserInfo info) {
-        SharedPreferences.Editor editor = AppContext.getSharedPreferences().edit();
-        editor.putString("token", info.token).commit();
+        AppContext.getSharedPreferences().edit().putString("token", info.token).commit();
+    }
+
+    @Override
+    public String getToken() {
+        return AppContext.getSharedPreferences().getString("token", "");
     }
 }

@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
 public class TextUtils {
 
     /**
-     * not null 怕段
+     * String not null
      * @param str
      * @return
      */

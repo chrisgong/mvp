@@ -1,4 +1,4 @@
-package com.shuzijiayuan.myapplication.data.repository;
+package com.shuzijiayuan.myapplication.data.repository.login;
 
 import android.support.annotation.NonNull;
 
@@ -21,4 +21,6 @@ public interface LoginDataSource {
     void deleteAllUserInfo();
 
     void saveUserInfo(@NonNull UserInfo task);
+
+    String getToken();
 }

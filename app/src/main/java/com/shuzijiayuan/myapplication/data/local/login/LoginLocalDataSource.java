@@ -1,10 +1,9 @@
 package com.shuzijiayuan.myapplication.data.local.login;
 
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
 import com.shuzijiayuan.myapplication.AppContext;
-import com.shuzijiayuan.myapplication.data.repository.LoginDataSource;
+import com.shuzijiayuan.myapplication.data.repository.login.LoginDataSource;
 import com.shuzijiayuan.myapplication.data.bean.login.UserInfo;
 import com.shuzijiayuan.myapplication.utils.TextUtils;
 
@@ -44,7 +43,12 @@ public class LoginLocalDataSource implements LoginDataSource {
     }
 
     @Override
-    public void saveUserInfo(@NonNull UserInfo task) {
+    public void saveUserInfo(@NonNull UserInfo info) {
+        AppContext.getSharedPreferences().edit().putString("token", info.token).commit();
+    }
 
+    @Override
+    public String getToken() {
+        return AppContext.getSharedPreferences().getString("token", "");
     }
 }

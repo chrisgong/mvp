@@ -1,9 +1,10 @@
 package com.shuzijiayuan.myapplication.login.presenter;
 
-import com.shuzijiayuan.myapplication.data.repository.LoginDataSource;
-import com.shuzijiayuan.myapplication.data.repository.LoginRepository;
-import com.shuzijiayuan.myapplication.login.contract.LoginContract;
+import com.shuzijiayuan.myapplication.data.repository.login.LoginDataSource;
+import com.shuzijiayuan.myapplication.data.repository.login.LoginRepository;
+import com.shuzijiayuan.myapplication.login.LoginContract;
 import com.shuzijiayuan.myapplication.data.bean.login.UserInfo;
+import com.shuzijiayuan.myapplication.login.LoginPresenterImpl;
 
 import org.junit.Before;
 import org.junit.Test;
