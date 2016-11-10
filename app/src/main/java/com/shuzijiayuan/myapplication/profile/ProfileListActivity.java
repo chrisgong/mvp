@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.shuzijiayuan.myapplication.R;
 import com.shuzijiayuan.myapplication.data.Injection;
-import com.shuzijiayuan.myapplication.data.bean.profile.ProfileInfo;
+import com.shuzijiayuan.myapplication.data.model.profile.ProfileInfo;
 import com.shuzijiayuan.myapplication.utils.TextUtils;
 import com.squareup.picasso.Picasso;
 

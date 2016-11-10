@@ -1,4 +1,4 @@
-package com.shuzijiayuan.myapplication.data.bean.profile;
+package com.shuzijiayuan.myapplication.data.model.profile;
 
 /**
  * Created by gc on 16/8/23.

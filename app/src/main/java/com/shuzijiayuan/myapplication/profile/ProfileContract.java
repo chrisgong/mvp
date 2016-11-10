@@ -1,6 +1,6 @@
 package com.shuzijiayuan.myapplication.profile;
 
-import com.shuzijiayuan.myapplication.data.bean.profile.ProfileInfo;
+import com.shuzijiayuan.myapplication.data.model.profile.ProfileInfo;
 
 import java.util.ArrayList;
 
@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public interface ProfileContract {
 
-    public interface View {
+    interface View {
         void getSuccess(ArrayList<ProfileInfo> infos);
 
         void showLoading();
@@ -20,7 +20,7 @@ public interface ProfileContract {
         void showToast(String message);
     }
 
-    public interface Presenter {
+    interface Presenter {
 
         void getProfileList();
     }

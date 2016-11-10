@@ -2,7 +2,7 @@ package com.shuzijiayuan.myapplication.data.local.profile;
 
 import android.support.annotation.NonNull;
 
-import com.shuzijiayuan.myapplication.data.bean.profile.ProfileInfo;
+import com.shuzijiayuan.myapplication.data.model.profile.ProfileInfo;
 import com.shuzijiayuan.myapplication.data.repository.profile.ProfileDataSource;
 
 import java.util.ArrayList;
@@ -31,10 +31,10 @@ public class ProfileLocalDataSource implements ProfileDataSource {
     }
 
     @Override
-    public void getProfiles(@NonNull GetProfileCallback callback) {
+    public void getProfiles(@NonNull IProfileListCallback callback) {
         RealmResults<ProfileInfo> infos = Realm.getDefaultInstance().where(ProfileInfo.class).findAll();
         if(infos != null && infos.size() != 0) {
-            callback.onGetProfile((ArrayList<ProfileInfo>) Realm.getDefaultInstance().copyFromRealm(infos));
+            callback.onSuccess((ArrayList<ProfileInfo>) Realm.getDefaultInstance().copyFromRealm(infos));
         }else{
             callback.onDataNotAvailable();
         }
@@ -57,4 +57,9 @@ public class ProfileLocalDataSource implements ProfileDataSource {
         });
     }
 
+    @Override
+    public void refreshProfileList() {
+        // Not required because the {@link TasksRepository} handles the logic of refreshing the
+        // tasks from all the available data sources.
+    }
 }

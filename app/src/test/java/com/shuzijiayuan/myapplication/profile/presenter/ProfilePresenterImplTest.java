@@ -1,6 +1,6 @@
 package com.shuzijiayuan.myapplication.profile.presenter;
 
-import com.shuzijiayuan.myapplication.data.bean.profile.ProfileInfo;
+import com.shuzijiayuan.myapplication.data.model.profile.ProfileInfo;
 import com.shuzijiayuan.myapplication.data.repository.profile.ProfileDataSource;
 import com.shuzijiayuan.myapplication.data.repository.profile.ProfileRepository;
 import com.shuzijiayuan.myapplication.profile.ProfileContract;
@@ -29,7 +29,7 @@ public class ProfilePresenterImplTest {
     private ProfileContract.View mView;
 
     @Captor
-    private ArgumentCaptor<ProfileDataSource.GetProfileCallback> mCallbackCaptor;
+    private ArgumentCaptor<ProfileDataSource.IProfileListCallback> mCallbackCaptor;
 
     private ProfilePresenterImpl mPresenter;
 
@@ -44,7 +44,7 @@ public class ProfilePresenterImplTest {
         mPresenter.getProfileList();
         verify(mView).showLoading();
         verify(mRepository).getProfiles(mCallbackCaptor.capture());
-        mCallbackCaptor.getValue().onGetProfile(new ArrayList<ProfileInfo>());
+        mCallbackCaptor.getValue().onSuccess(new ArrayList<ProfileInfo>());
         verify(mView).cancelDialog();
     }
 

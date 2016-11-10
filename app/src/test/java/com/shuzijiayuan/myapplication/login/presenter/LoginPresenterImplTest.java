@@ -3,7 +3,7 @@ package com.shuzijiayuan.myapplication.login.presenter;
 import com.shuzijiayuan.myapplication.data.repository.login.LoginDataSource;
 import com.shuzijiayuan.myapplication.data.repository.login.LoginRepository;
 import com.shuzijiayuan.myapplication.login.LoginContract;
-import com.shuzijiayuan.myapplication.data.bean.login.UserInfo;
+import com.shuzijiayuan.myapplication.data.model.login.UserInfo;
 import com.shuzijiayuan.myapplication.login.LoginPresenterImpl;
 
 import org.junit.Before;
@@ -28,7 +28,7 @@ public class LoginPresenterImplTest {
     private LoginContract.View mView;
 
     @Captor
-    private ArgumentCaptor<LoginDataSource.GetUserInfoCallback> mLoginCallbackCaptor;
+    private ArgumentCaptor<LoginDataSource.ILoginCallback> mLoginCallbackCaptor;
 
     private LoginPresenterImpl mPresenter;
 
@@ -47,7 +47,7 @@ public class LoginPresenterImplTest {
 
         verify(mView).showLoading();
         verify(mRepository).getUserInfo(eq(Long.parseLong(phone)), eq(password), mLoginCallbackCaptor.capture());
-        mLoginCallbackCaptor.getValue().onGetUserInfo(info);
+        mLoginCallbackCaptor.getValue().onSuccess(info);
         verify(mView).cancelDialog();
         verify(mView).loginSuccess();
     }

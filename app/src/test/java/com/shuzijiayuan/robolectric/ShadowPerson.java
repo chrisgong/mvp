@@ -1,4 +1,4 @@
-package com.shuzijiayuan.myapplication.robolectric;
+package com.shuzijiayuan.robolectric;
 
 import org.robolectric.annotation.Implementation;
 import org.robolectric.annotation.Implements;

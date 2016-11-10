@@ -1,4 +1,4 @@
-package com.shuzijiayuan.myapplication.robolectric;
+package com.shuzijiayuan.robolectric;
 
 import org.junit.runners.model.InitializationError;
 import org.robolectric.RobolectricGradleTestRunner;

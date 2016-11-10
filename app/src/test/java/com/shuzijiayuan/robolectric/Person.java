@@ -1,4 +1,4 @@
-package com.shuzijiayuan.myapplication.robolectric;
+package com.shuzijiayuan.robolectric;
 
 /**
  * Created by gc on 2016/11/8.

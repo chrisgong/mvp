@@ -1,9 +1,9 @@
 package com.shuzijiayuan.myapplication.data.remote;
 
 
-import com.shuzijiayuan.myapplication.data.bean.login.LoginRequest;
-import com.shuzijiayuan.myapplication.data.bean.login.LoginResult;
-import com.shuzijiayuan.myapplication.data.bean.profile.ProfileListResult;
+import com.shuzijiayuan.myapplication.data.model.login.LoginRequest;
+import com.shuzijiayuan.myapplication.data.model.login.LoginResult;
+import com.shuzijiayuan.myapplication.data.model.profile.ProfileListResult;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;

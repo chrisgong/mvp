@@ -1,6 +1,6 @@
-package com.shuzijiayuan.myapplication.data.bean.login;
+package com.shuzijiayuan.myapplication.data.model.login;
 
-import com.shuzijiayuan.myapplication.data.bean.BaseResult;
+import com.shuzijiayuan.myapplication.data.model.BaseResult;
 
 import java.util.ArrayList;
 

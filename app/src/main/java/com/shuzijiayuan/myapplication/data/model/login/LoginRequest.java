@@ -1,4 +1,4 @@
-package com.shuzijiayuan.myapplication.data.bean.login;
+package com.shuzijiayuan.myapplication.data.model.login;
 
 /**
  * Created by chrisgong on 16/1/22.

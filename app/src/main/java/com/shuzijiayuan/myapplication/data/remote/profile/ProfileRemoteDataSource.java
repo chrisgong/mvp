@@ -1,12 +1,12 @@
 package com.shuzijiayuan.myapplication.data.remote.profile;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.shuzijiayuan.myapplication.AppContext;
-import com.shuzijiayuan.myapplication.data.bean.profile.ProfileInfo;
-import com.shuzijiayuan.myapplication.data.bean.profile.ProfileListResult;
+import com.shuzijiayuan.myapplication.data.model.profile.ProfileInfo;
+import com.shuzijiayuan.myapplication.data.model.profile.ProfileListResult;
 import com.shuzijiayuan.myapplication.data.remote.ApiUtils;
+import com.shuzijiayuan.myapplication.data.remote.NetworkErrorCodeException;
 import com.shuzijiayuan.myapplication.data.repository.profile.ProfileDataSource;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class ProfileRemoteDataSource implements ProfileDataSource {
     }
 
     @Override
-    public void getProfiles(@NonNull final GetProfileCallback callback) {
+    public void getProfiles(@NonNull final IProfileListCallback callback) {
         String token = AppContext.getSharedPreferences().getString("token", "");
         ApiUtils.getKintonInstance().profileList(token)
                 .subscribeOn(Schedulers.io())
@@ -44,17 +44,16 @@ public class ProfileRemoteDataSource implements ProfileDataSource {
                 .subscribe(new Action1<ProfileListResult>() {
                     @Override
                     public void call(ProfileListResult profileListResult) {
-                        Log.e("cim", "profileListResult:" + profileListResult.toString());
                         if (profileListResult != null) {
-                            callback.onGetProfile(profileListResult.getData().getList());
+                            callback.onSuccess(profileListResult.getData().getList());
                         } else {
-                            callback.onDataNotAvailable();
+                            callback.onFailure(new NetworkErrorCodeException(profileListResult.getCode()).getMessage());
                         }
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        Log.e("cim", "profileListResult error:" + throwable.getMessage().toString());
+                        callback.onFailure(new NetworkErrorCodeException(-1).getMessage());
                     }
                 });
     }
@@ -67,5 +66,11 @@ public class ProfileRemoteDataSource implements ProfileDataSource {
     @Override
     public void saveProfiles(@NonNull ArrayList<ProfileInfo> info) {
 
+    }
+
+    @Override
+    public void refreshProfileList() {
+        // Not required because the {@link TasksRepository} handles the logic of refreshing the
+        // tasks from all the available data sources.
     }
 }

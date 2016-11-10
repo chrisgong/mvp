@@ -1,4 +1,4 @@
-package com.shuzijiayuan.myapplication.data.bean.login;
+package com.shuzijiayuan.myapplication.data.model.login;
 
 /**
  * Created by gc on 2016/11/8.

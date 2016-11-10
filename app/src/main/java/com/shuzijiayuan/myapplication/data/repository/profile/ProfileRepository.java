@@ -1,10 +1,8 @@
 package com.shuzijiayuan.myapplication.data.repository.profile;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
-import com.shuzijiayuan.myapplication.AppContext;
-import com.shuzijiayuan.myapplication.data.bean.profile.ProfileInfo;
+import com.shuzijiayuan.myapplication.data.model.profile.ProfileInfo;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -27,8 +25,10 @@ public class ProfileRepository implements ProfileDataSource {
 
     boolean mCacheIsDirty = false;
 
+    /**
+     * 缓存
+     */
     Map<String, ProfileInfo> mCaches;
-
 
     // Prevent direct instantiation.
     private ProfileRepository(@NonNull ProfileDataSource profileRemoteDataSource, @NonNull ProfileDataSource profileLocalDataSource) {
@@ -44,12 +44,12 @@ public class ProfileRepository implements ProfileDataSource {
     }
 
     @Override
-    public void getProfiles(@NonNull final GetProfileCallback callback) {
+    public void getProfiles(@NonNull final IProfileListCallback callback) {
         checkNotNull(callback);
 
         // Respond immediately with cache if available and not dirty
         if (mCaches != null && !mCacheIsDirty) {
-            callback.onGetProfile(new ArrayList<>(mCaches.values()));
+            callback.onSuccess(new ArrayList<>(mCaches.values()));
             return;
         }
 
@@ -57,11 +57,16 @@ public class ProfileRepository implements ProfileDataSource {
             // If the cache is dirty we need to fetch new data from the network.
             getProfilesFromRemoteDataSource(callback);
         } else {
-            mProfileLocalDataSource.getProfiles(new GetProfileCallback() {
+            mProfileLocalDataSource.getProfiles(new IProfileListCallback() {
                 @Override
-                public void onGetProfile(ArrayList<ProfileInfo> infos) {
+                public void onSuccess(ArrayList<ProfileInfo> infos) {
                     refreshCache(infos);
-                    callback.onGetProfile(infos);
+                    callback.onSuccess(new ArrayList<>(mCaches.values()));
+                }
+
+                @Override
+                public void onFailure(String msg) {
+
                 }
 
                 @Override
@@ -83,18 +88,23 @@ public class ProfileRepository implements ProfileDataSource {
         mCacheIsDirty = false;
     }
 
-    private void getProfilesFromRemoteDataSource(final GetProfileCallback callback) {
-        mProfileRemoteDataSource.getProfiles(new GetProfileCallback() {
+    private void getProfilesFromRemoteDataSource(final IProfileListCallback callback) {
+        mProfileRemoteDataSource.getProfiles(new IProfileListCallback() {
             @Override
-            public void onGetProfile(ArrayList<ProfileInfo> infos) {
+            public void onSuccess(ArrayList<ProfileInfo> infos) {
                 refreshCache(infos);
                 refreshLocalDataSource(infos);
-                callback.onGetProfile(infos);
+                callback.onSuccess(new ArrayList<>(mCaches.values()));
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                callback.onFailure(msg);
             }
 
             @Override
             public void onDataNotAvailable() {
-                callback.onDataNotAvailable();
+
             }
         });
     }
@@ -117,7 +127,22 @@ public class ProfileRepository implements ProfileDataSource {
     }
 
     @Override
-    public void saveProfiles(@NonNull ArrayList<ProfileInfo> info) {
+    public void saveProfiles(@NonNull ArrayList<ProfileInfo> infos) {
+        checkNotNull(infos);
+        mProfileLocalDataSource.saveProfiles(infos);
 
+        // Do in memory cache update to keep the app UI up to date
+        if (mCaches == null) {
+            mCaches = new LinkedHashMap<>();
+        }
+
+        for (ProfileInfo info : infos) {
+            mCaches.put(info.iid, info);
+        }
+    }
+
+    @Override
+    public void refreshProfileList() {
+        mCacheIsDirty = true;
     }
 }

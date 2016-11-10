@@ -1,4 +1,4 @@
-package com.shuzijiayuan.myapplication.robolectric;
+package com.shuzijiayuan.robolectric;
 
 import com.shuzijiayuan.myapplication.BuildConfig;
 

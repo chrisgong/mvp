@@ -2,10 +2,9 @@ package com.shuzijiayuan.myapplication.login;
 
 import android.support.annotation.NonNull;
 
-import com.shuzijiayuan.myapplication.data.bean.login.UserInfo;
+import com.shuzijiayuan.myapplication.data.model.login.UserInfo;
 import com.shuzijiayuan.myapplication.data.repository.login.LoginDataSource;
 import com.shuzijiayuan.myapplication.data.repository.login.LoginRepository;
-import com.shuzijiayuan.myapplication.login.LoginContract;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -27,22 +26,18 @@ public class LoginPresenterImpl implements LoginContract.Presenter {
     @Override
     public void login(String phone, String password) {
         mView.showLoading();
-        mRepository.getUserInfo(Long.parseLong(phone), password, new LoginDataSource.GetUserInfoCallback() {
+        mRepository.getUserInfo(Long.parseLong(phone), password, new LoginDataSource.ILoginCallback() {
             @Override
-            public void onGetUserInfo(UserInfo info) {
+            public void onSuccess(UserInfo info) {
                 mView.cancelDialog();
                 mView.loginSuccess();
             }
 
             @Override
-            public void onDataNotAvailable() {
+            public void onFailure(String msg) {
                 mView.cancelDialog();
+                mView.showToast(msg);
             }
         });
-    }
-
-    @Override
-    public String getToken() {
-        return mRepository.getToken();
     }
 }

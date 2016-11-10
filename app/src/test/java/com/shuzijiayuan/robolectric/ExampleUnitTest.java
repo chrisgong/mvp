@@ -1,4 +1,4 @@
-package com.shuzijiayuan.myapplication.robolectric;
+package com.shuzijiayuan.robolectric;
 
 import android.app.Activity;
 import android.app.AlertDialog;

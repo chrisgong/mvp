@@ -16,19 +16,19 @@ public class NetworkErrorCodeException extends Throwable {
     public String getMessage() {
         String message = "";
         switch (mCode) {
-            case 0:
+            case -1:
                 message = "网络异常";
                 break;
-            case 1:
+            case 400:
                 message = "Token为null";
                 break;
-            case 2:
+            case 401:
                 message = "请求过于频繁";
                 break;
-            case 3:
+            case 402:
                 message = "服务器异常";
                 break;
-            case 4:
+            case 403:
                 message = "参数错误";
                 break;
             default:

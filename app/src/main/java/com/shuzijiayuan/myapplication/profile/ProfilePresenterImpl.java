@@ -2,10 +2,9 @@ package com.shuzijiayuan.myapplication.profile;
 
 import android.support.annotation.NonNull;
 
-import com.shuzijiayuan.myapplication.data.bean.profile.ProfileInfo;
+import com.shuzijiayuan.myapplication.data.model.profile.ProfileInfo;
 import com.shuzijiayuan.myapplication.data.repository.profile.ProfileDataSource;
 import com.shuzijiayuan.myapplication.data.repository.profile.ProfileRepository;
-import com.shuzijiayuan.myapplication.profile.ProfileContract;
 
 import java.util.ArrayList;
 
@@ -29,16 +28,23 @@ public class ProfilePresenterImpl implements ProfileContract.Presenter {
     @Override
     public void getProfileList() {
         mView.showLoading();
-        mRepository.getProfiles(new ProfileDataSource.GetProfileCallback() {
+        mRepository.refreshProfileList();
+        mRepository.getProfiles(new ProfileDataSource.IProfileListCallback() {
             @Override
-            public void onGetProfile(ArrayList<ProfileInfo> infos) {
+            public void onSuccess(ArrayList<ProfileInfo> infos) {
                 mView.cancelDialog();
                 mView.getSuccess(infos);
             }
 
             @Override
-            public void onDataNotAvailable() {
+            public void onFailure(String msg) {
                 mView.cancelDialog();
+                mView.showToast(msg);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+
             }
         });
     }

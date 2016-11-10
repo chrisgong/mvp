@@ -1,4 +1,4 @@
-package com.shuzijiayuan.myapplication.data.bean.profile;
+package com.shuzijiayuan.myapplication.data.model.profile;
 
 
 import io.realm.RealmObject;
