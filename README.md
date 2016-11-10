@@ -1,0 +1,1 @@
+基于MVP框架, 整合RxJava/Retrofit/Mockito/Robolectric等实现.
